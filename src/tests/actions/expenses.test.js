@@ -13,6 +13,12 @@ import {
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
+const testUserId = 'abc123';
+const defaultAuthenticationState = { 
+    authentication:  { 
+        userId:  testUserId 
+    } 
+};
 const createMockStore = configureMockStore([thunk]);
 
 beforeEach((done) => {
@@ -20,7 +26,7 @@ beforeEach((done) => {
     expenses.forEach(({ id, description, note, amount, createdAt }) => {
         expensesData[id] = { description, note, amount, createdAt };
     });
-    database.ref('expenses').set(expensesData).then(() => done());
+    database.ref(`users/${testUserId}/expenses`).set(expensesData).then(() => done());
 });
 
 test('should set up remove expense action object', () => {
@@ -32,7 +38,7 @@ test('should set up remove expense action object', () => {
 });
 
 test('should remove expense from firebase', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthenticationState);
     const id = expenses[2].id;
 
     // remove expense
@@ -45,7 +51,7 @@ test('should remove expense from firebase', (done) => {
         });
 
         // attempt to retrieve expense
-        return database.ref(`expenses/${actions[0].id}`).once('value');
+        return database.ref(`users/${testUserId}/expenses/${actions[0].id}`).once('value');
     }).then((snapshot) => {
         expect(snapshot.val()).toBeFalsy();
         done();
@@ -75,7 +81,7 @@ test('should set up edit expense action object', () => {
 });
 
 test('should edit expense in database', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthenticationState);
     const id = expenses[0].id;
     const updates = {
         amount:  21045,
@@ -92,7 +98,7 @@ test('should edit expense in database', (done) => {
             updates
         });
         // attempt to retrieve expense
-        return database.ref(`expenses/${id}`).once('value');
+        return database.ref(`users/${testUserId}/expenses/${id}`).once('value');
     }).then((snapshot) => {
         // because id is in test object, but not in data read from database,
         // need to craft an object to match updated test object
@@ -120,7 +126,7 @@ test('should set up add-expense object with provided values', () => {
 });
 
 test('should add expense to database and store', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthenticationState);
     const expenseData = {
         description:  'mouse',
         amount:  3000,
@@ -138,7 +144,7 @@ test('should add expense to database and store', (done) => {
             }
         });
 
-        return database.ref(`expenses/${actions[0].expense.id}`).once('value');
+        return database.ref(`users/${testUserId}/expenses/${actions[0].expense.id}`).once('value');
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual(expenseData);
         done();
@@ -146,7 +152,7 @@ test('should add expense to database and store', (done) => {
 });
 
 test('should add expense with defaults to database and store', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthenticationState);
     const expenseDefaults = {
         description:  '',
         amount:  0,
@@ -164,7 +170,7 @@ test('should add expense with defaults to database and store', (done) => {
             }
         });
 
-        return database.ref(`expenses/${actions[0].expense.id}`).once('value');
+        return database.ref(`users/${testUserId}/expenses/${actions[0].expense.id}`).once('value');
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual(expenseDefaults);
         done();
@@ -180,7 +186,7 @@ test('should set up set expense action object with data', () => {
 });
 
 test('should fetch expenses from firebase', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthenticationState);
     store.dispatch(startSetExpenses()).then(() => {
         const actions = store.getActions();
         expect(actions[0]).toEqual({
