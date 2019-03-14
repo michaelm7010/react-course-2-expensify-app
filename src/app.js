@@ -9,6 +9,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import AppRouter, { history } from './routers/AppRouter';
 import { login, logout } from './actions/authentication';
 import { startSetExpenses} from './actions/expenses';
+import LoadingPage from './components/LoadingPage';
 
 const store = configureStore();
 
@@ -27,7 +28,7 @@ const renderApp = () => {
     }
 };
 
-ReactDOM.render(<p>Loading ...</p>, document.getElementById('app'));
+ReactDOM.render(<LoadingPage/>, document.getElementById('app'));
 
 // This code is in place so that the user status (i.e., possibly logged in to Google) is set in the store implicitly.
 // If the user has to log in every time when the application starts, these actions would probably be driven from the

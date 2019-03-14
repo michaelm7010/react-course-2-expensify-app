@@ -1,0 +1,23 @@
+.header {
+    background:  $dark-blue;
+}
+
+.header__content {
+    // center items vertically
+    align-items:  center;
+    display:  flex;
+    // distribute leftover space between title and button
+    justify-content:  space-between;
+    // pad small space on top, botton, zero on sides
+    padding:  $s-size 0;
+}
+
+.header__title {
+    color:  white;
+    // remove underscore from link
+    text-decoration:  none;
+    // specify margin for all h1 components in this class
+    h1 {
+        margin:  0;
+    }
+}

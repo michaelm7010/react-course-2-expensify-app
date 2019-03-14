@@ -1,0 +1,8 @@
+// this style ensures that content on pages is centered on the web page
+.content-container {
+    // auto even distributes space on left and right
+    margin:  0 auto;
+    max-width:  80rem;
+    // medium padding on left, right side
+    padding:  0 $m_size;
+}

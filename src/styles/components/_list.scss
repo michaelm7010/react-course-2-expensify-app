@@ -1,0 +1,74 @@
+.list-header {
+    background:  $off-white;
+    border:  1px solid darken($off-white, 7%);
+    color:  $grey;
+    display:  flex;
+    // distribute leftover space between items
+    justify-content:  space-between;
+    padding:  $s-size $m-size;
+}
+
+.list-body {
+    margin-bottom:  $m-size;
+    @media (mind-width:  $desktop-breakpoint) {
+        margin-bottom:  $l-size;
+    }
+
+}
+
+.list-item {
+    border:  1px solid darken($off-white, 7%);
+    // remove border on top because the one above it already has a border there
+    border-top:  none;
+    color:  $dark-grey;
+    display:  flex;
+    // on mobile display, we want things going in columns
+    flex-direction:  column;
+    padding:  $s-size;
+    text-decoration:  none;
+    // transition defines three things:  property we wish to transition, duration of transition, function we wish to use
+    transition:  background .3s ease;
+    &:hover {
+        background:  $off-white;
+    }  
+
+    // override properties for desktop
+    @media (min-width:  $desktop-breakpoint) {
+        // center items vertically
+        align-items:  center;
+        flex-direction:  row;
+        justify-content:  space-between;
+        padding:  $m-size;
+    }
+}
+
+.list-item--message {
+    align-items:  center;
+    color:  $grey;
+    justify-content:  center;
+    padding:  $m-size;
+    &:hover {
+        background:  none;
+    }
+}
+
+.list-item__title {
+    margin:  0;
+    // in the case of a long word without spaces, this wraps the lines
+    word-break:  break-all;
+}
+
+.list-item__subtitle {
+    color:  $grey;
+    font-size:  $font-size-small;
+}
+
+.list-item__data {
+    // for mobile, we don't want much margin on top or bottom of amount
+    margin:  $s-size 0 0 0;
+    // override properties for desktop
+    @media (min-width:  $desktop-breakpoint) {
+        margin:  0;
+        padding-left:  $s-size;
+    }
+}

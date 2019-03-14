@@ -1,0 +1,15 @@
+// only show up on mobile screen
+.show-for-mobile {
+    // if desktop width, do not display component
+    @media (min-width:  $desktop-breakpoint) {
+        display:  none;
+    }
+}
+
+// only show up on desktop screen
+.show-for-desktop {
+    // if on mobile device, do not display component
+    @media(max-width:  $desktop-breakpoint - .01rem) {
+        display:  none;
+    }
+}

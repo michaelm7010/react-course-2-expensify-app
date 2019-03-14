@@ -1,0 +1,14 @@
+.form {
+    display:  flex;
+    flex-direction:  column;
+    // target changes on all descendants 
+    >  * {
+        margin-bottom:  $m-size;
+    }
+}
+
+.form__error {
+    // set margin to all sides except bottom
+    margin:  0 0 $l_size 0;
+    font-style:  italic;
+}

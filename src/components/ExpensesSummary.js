@@ -1,6 +1,7 @@
 import React from 'react';
 import numeral from 'numeral';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import selectExpenses from '../selectors/expenses';
 import selectExpensesTotal from '../selectors/expenses-total';
 
@@ -10,14 +11,13 @@ const formatExpenses = (expensesTotal) =>
 const expenseWord = (expenseCount) => expenseCount === 1 ? 'expense' : 'expenses';
  
 export const ExpensesSummary = ({ expenseCount, expensesTotal }) => (
-    <div>
-        {
-            expenseCount === 0 ? (
-                <h1>No expenses meeting filter criteria</h1>
-            ) : (
-                <h1>Viewing {expenseCount} {expenseWord(expenseCount)} totaling {formatExpenses(expensesTotal)}</h1>
-            )                
-        }
+    <div className="page-header">
+        <div className="content-container">
+            <h1 className="page-header__title">Viewing <span>{expenseCount}</span> {expenseWord(expenseCount)} totaling <span>{formatExpenses(expensesTotal)}</span></h1>
+            <div className="page-header__actions">
+                <Link to="/create" className="button">Add Expense</Link>
+            </div>
+        </div>
     </div>
 );
 
